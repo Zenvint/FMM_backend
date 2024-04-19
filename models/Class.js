@@ -5,18 +5,14 @@ const classSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    section: {
+    sectionId: {
         type: String,
         required: true
     },
-    roles: {
-        type: [String],
-        default: ["Employee"]
+    tuition: {
+        type: Number,
+        required: true
     },
-    active: {
-        type: Boolean,
-        default: true
-    }
 })
 
-module.exports = mongoose.model('Class', userSchema)
+module.exports = mongoose.model('Class', classSchema)
