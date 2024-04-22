@@ -58,3 +58,14 @@
 20240419	23:03:11	13cab9bd-2d32-4cce-aaa9-067df7f4ba0f	GET	/courses	undefined
 20240419	23:03:47	20108e4f-38d3-4f64-9cdb-b9292d413176	DELETE	/courses	undefined
 20240419	23:04:13	1604195a-cc5e-4535-9959-6e5428214fe3	DELETE	/courses	undefined
+20240422	10:24:59	dffa3eff-65e3-4cd4-a8fc-a35115626022	GET	/users	undefined
+20240422	10:28:46	3c64ef97-3061-491d-b8d3-26d88b2bba4a	POST	/auth	undefined
+20240422	10:42:02	abee8878-a6a8-427b-b6bb-8a4354e6f101	POST	/auth	undefined
+20240422	10:42:17	65e75ce1-0e1b-4930-aa92-ec54dc94b12d	POST	/auth	undefined
+20240422	10:50:03	9742c951-6314-4d12-8f79-c50af26e835b	POST	/auth	undefined
+20240422	10:50:40	ea44a3ce-567c-44a4-b3c8-40e1fafe11fe	GET	/users	undefined
+20240422	10:53:26	eb96f608-7dc0-4f89-9449-5dfe19e2aabd	GET	/users	undefined
+20240422	10:59:55	f599eeae-2b7f-4ec0-bb62-143fde0fb5b9	GET	/users	undefined
+20240422	11:00:54	fad93189-4b81-4372-a750-90377650f37b	GET	/auth	undefined
+20240422	11:01:25	46830d9c-c8ec-40cc-a26a-23a69a0f2bae	GET	/auth/refresh	undefined
+20240422	11:02:22	5f87e622-494a-4171-9262-fec5c8947ed3	POST	/auth/logout	undefined
