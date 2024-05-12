@@ -2,3 +2,4 @@
 20240422	10:28:47	358ac8d9-5a81-458d-aa8e-b364fd502989	Error: secretOrPrivateKey must have a value	POST	/auth	undefined
 20240422	10:42:03	d55e40ac-8c78-46b2-b07d-10c4cf44c2db	Error: secretOrPrivateKey must have a value	POST	/auth	undefined
 20240422	10:42:18	e0cdb736-464e-40c8-8722-c9c7bacfa79d	Error: secretOrPrivateKey must have a value	POST	/auth	undefined
+20240425	01:01:41	6c472973-ed38-4037-b46f-6d0ee4b9b2aa	Error: Not allowed by CORS	OPTIONS	/auth	http://localhost:3000

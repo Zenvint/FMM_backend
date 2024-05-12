@@ -29,6 +29,7 @@ app.use('/auth', require('./routes/authRoutes'))
 app.use('/users', require('./routes/userRoutes'))
 app.use('/sections', require('./routes/sectionRoutes'))
 app.use('/classes', require('./routes/classRoutes'))
+app.use('/students', require('./routes/studentRoutes'))
 app.use('/courses', require('./routes/courseRoutes'))
 
 app.all('*', (req, res) => {
