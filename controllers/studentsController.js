@@ -1,6 +1,7 @@
 const Class = require("../models/Class");
+const moment = require('moment');
 const Section = require("../models/Section");
-const Student = require("../models/Student")
+const Student = require("../models/Student");
 const asyncHandler = require("express-async-handler");
 
 // @desc Get All students
@@ -19,7 +20,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
     students.map(async (student) => {
       const section = await Section.findById(student.sectionId).lean().exec();
       const classObj = await Class.findById(student.classId).lean().exec()
-      return { ...student, sectionname: section.sectionname, classname: classObj.classname };
+      return { ...student, sectionname: section.sectionname, classname: classObj.classname, dobformated: moment(student.dob).format('YYYY-MM-DD') };
     })
   );
 
@@ -61,7 +62,7 @@ const createNewStudent = asyncHandler(async (req, res) => {
 // @route PATCH /student
 // @access Private
 const updateStudent = asyncHandler(async (req, res) => {
-  const { id, matricule, fullname , sectionId, classId,dob, pob, nationality, gender, parentname, parentnumber} = req.body;
+  const { id , matricule ,fullname , sectionId, classId,dob, pob, nationality, gender, parentname, parentnumber} = req.body;
 
   // Confirm data
   if (!id || !matricule || !fullname || !sectionId || !classId || !dob || !pob || !nationality || !gender || !parentname || !parentnumber) {
@@ -85,7 +86,6 @@ const updateStudent = asyncHandler(async (req, res) => {
     return res.status(409).json({ message: "Duplicate Student" });
   }
 
-  student.matricule = matricule;
   student.fullname = fullname;
   student.sectionId = sectionId;
   student.classId = classId;

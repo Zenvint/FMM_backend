@@ -1,4 +1,5 @@
 const Section = require("../models/Section");
+const Class = require("../models/Class");
 const asyncHandler = require("express-async-handler");
 
 
@@ -92,6 +93,13 @@ const deleteSection = asyncHandler(async (req, res) => {
 
   if (!id) {
     return res.status(400).json({ message: "Section ID required" });
+  }
+
+  // check for dependent courses
+  const classObj = await Class.findOne({ sectionId: id }).lean().exec();
+
+  if (classObj) {
+    return res.status(400).json({ message: "Section has assigned class, please delete all dependent classes and try again" });
   }
 
   const section = await Section.findById(id).exec();
