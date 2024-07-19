@@ -7,3 +7,10 @@
 20240714	13:03:47	ba10f68e-3124-46a4-9d9c-a7c3b3e88637	ReferenceError: matricule is not defined	PATCH	/students	http://localhost:3000
 20240714	13:04:30	39e5f9fb-1c54-451e-a012-468766a14fc4	ReferenceError: matricule is not defined	PATCH	/students	http://localhost:3000
 20240714	13:05:28	ff9fb3fc-f57f-440a-bae6-9433757d0e1f	ReferenceError: matricule is not defined	PATCH	/students	http://localhost:3000
+20240717	22:03:39	117e7af1-aee8-40e5-8e5c-ef8815757030	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240717	22:09:52	800c80cf-ae7e-4d96-b748-5092c4383958	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240717	22:10:56	03ed894c-ba04-4628-bbd5-3960944dea48	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240717	22:14:02	baa1d1fc-4205-42f5-890c-8c1a0db053c7	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240717	22:15:42	b23ec0cb-53a2-43c3-ad91-d7285d416de9	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240717	22:16:55	e57bc215-a5df-42b9-a4c4-72bfd03d696d	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240717	22:21:15	5c8777f9-d95b-4240-af3c-a91f9fbe72a3	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
