@@ -1,5 +1,6 @@
 const Section = require("../models/Section");
 const Class = require("../models/Class");
+const Installment = require("../models/Installment");
 const asyncHandler = require("express-async-handler");
 
 
@@ -41,7 +42,10 @@ const createNewSection = asyncHandler(async (req, res) => {
   const section = await Section.create({sectionname});
 
   if (section) {
-    res.status(201).json({ message: `New section ${sectionname} created` });
+    // create associated installment
+    await Installment.create({sectionId: section._id});
+
+    res.status(201).json({ message: `New section ${section.sectionname} created` });
   } else {
     res.status(400).json({ message: "Invalid section data received" });
   }
@@ -108,9 +112,17 @@ const deleteSection = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Section not found" });
   }
 
+  // get and delete the corresponding installment
+  const installment = await Installment.findOne({sectionId: id}).exec();
+
+  if (!installment) {
+    return res.status(400).json({ message: "Installment not found" });
+  } 
+  
+  const delinstallment = await installment.deleteOne();
   const result = await section.deleteOne();
 
-  if (!result.acknowledged) {
+  if (!result.acknowledged || !delinstallment.acknowledged) {
     return res.status(400).json({ message: "error occured, try again" });
   }
 
