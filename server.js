@@ -33,6 +33,7 @@ app.use("/students", require("./routes/studentRoutes"));
 app.use("/courses", require("./routes/courseRoutes"));
 app.use("/installments", require("./routes/installmentRoutes"));
 app.use("/fees", require("./routes/feeRoutes"));
+app.use("/transaction", require("./routes/transactionRoute"));
 
 app.all("*", (req, res) => {
   res.status(404);
