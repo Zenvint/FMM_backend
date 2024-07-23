@@ -2,6 +2,7 @@ const Class = require("../models/Class");
 const moment = require('moment');
 const Section = require("../models/Section");
 const Student = require("../models/Student");
+const Fee = require("../models/Fee");
 const asyncHandler = require("express-async-handler");
 
 // @desc Get All students
@@ -19,7 +20,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
   const studentsWithSection_class = await Promise.all(
     students.map(async (student) => {
       const section = await Section.findById(student.sectionId).lean().exec();
-      const classObj = await Class.findById(student.classId).lean().exec()
+      const classObj = await Class.findById(student.classId).lean().exec();
       return { ...student, sectionname: section.sectionname, classname: classObj.classname, dobformated: moment(student.dob).format('YYYY-MM-DD') };
     })
   );
@@ -52,6 +53,8 @@ const createNewStudent = asyncHandler(async (req, res) => {
   const student = await Student.create({ matricule, fullname , sectionId, classId,dob, pob, nationality, gender, parentname, parentnumber });
 
   if (student) {
+    const classObj = await Class.findById(student.classId).exec();
+    await Fee.create({studentId: student._id, balance: classObj.tuition});
     res.status(201).json({ message: `New Student ${matricule} created` });
   } else {
     res.status(400).json({ message: "Invalid student data received" });
@@ -119,9 +122,17 @@ const deleteStudent = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Student not found" });
   }
 
+  // get and delete the corresponding fee
+  const fee = await Fee.findOne({studentId: id}).exec();
+
+  if (!fee) {
+    return res.status(400).json({ message: "fee not found" });
+  } 
+  
+  const delfee = await fee.deleteOne();
   const result = await student.deleteOne();
 
-  if (!result.acknowledged) {
+  if (!result.acknowledged || !delfee.acknowledged) {
     return res.status(400).json({ message: "error occured, try again" });
   }
 

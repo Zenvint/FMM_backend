@@ -1,47 +1,59 @@
 const mongoose = require("mongoose");
 
-const studentSchema = new mongoose.Schema({
-  matricule: {
-    type: String,
-    required: true,
+const studentSchema = new mongoose.Schema(
+  {
+    matricule: {
+      type: String,
+      required: true,
+    },
+    fullname: {
+      type: String,
+      required: true,
+    },
+    sectionId: {
+      type: String,
+      required: true,
+    },
+    classId: {
+      type: String,
+      required: true,
+    },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    pob: {
+      type: String,
+      required: true,
+    },
+    nationality: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    parentname: {
+      type: String,
+      required: true,
+    },
+    parentnumber: {
+      type: String,
+      required: true,
+    },
+    dismissed: {
+      type: Boolean,
+      default: false,
+    },
+    dismissalreason: {
+      type: String,
+      default: "",
+    },
   },
-  fullname: {
-    type: String,
-    required: true,
-  },
-  sectionId: {
-    type: String,
-    required: true,
-  },
-  classId: {
-    type: String,
-    required: true,
-  },
-  dob: {
-    type: Date,
-    required: true,
-  },
-  pob: {
-    type: String,
-    required: true,
-  },
-  nationality: {
-    type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
-  },
-  parentname: {
-    type: String,
-    required: true,
-  },
-  parentnumber: {
-    type: String,
-    required: true,
-  },
-});
-
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model("Student", studentSchema);
