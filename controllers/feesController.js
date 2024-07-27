@@ -44,8 +44,6 @@ const getAllFees = asyncHandler(async (req, res) => {
 const updateFee = asyncHandler(async (req, res) => {
   const { id, registrationfee, amountPaid, balance, status, discount } =
     req.body;
-
-  console.log(req.body)
   // Confirm data
   if (
     !id ||
