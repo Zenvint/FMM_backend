@@ -14,3 +14,16 @@
 20240717	22:15:42	b23ec0cb-53a2-43c3-ad91-d7285d416de9	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
 20240717	22:16:55	e57bc215-a5df-42b9-a4c4-72bfd03d696d	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
 20240717	22:21:15	5c8777f9-d95b-4240-af3c-a91f9fbe72a3	TypeError: installment.deleteOne is not a function	DELETE	/sections	http://localhost:3000
+20240721	22:56:14	d395f2c8-de8c-471b-a58b-dabf445fa89a	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:56:45	fa80d2c7-78e4-463d-969c-00a7cf724ddc	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:57:41	26c115a8-4ecf-46de-8008-b951f98dfebc	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:57:52	3db07df0-cb64-47b5-b30f-3bffb69055ef	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:58:07	f33be9f0-1c26-4847-9210-129be4b64dc4	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:58:35	73f7e53e-4852-4e47-9750-ef767e8b0231	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:58:43	cb730fb3-8a49-4b32-b128-593faa1d2cdc	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	22:59:44	9c3d75c4-b06d-4dbf-8b9e-d715f5bf0068	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	23:00:40	6ce12339-be50-4132-b020-02f351b48c2f	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	23:01:16	3cf63a32-017b-45b1-b771-995460624742	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	23:01:24	bbd56a67-1b4a-4c62-9eab-a93fc7f0608b	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	23:01:37	091e33a7-2d6b-41e6-b7d3-4c28aa1b5c4c	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240721	23:02:03	b9cd71ad-5cff-4020-abba-01252e83c3b1	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
