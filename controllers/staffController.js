@@ -1,4 +1,5 @@
 const Staff = require("../models/Staff");
+const Salary = require("../models/Salary");
 const asyncHandler = require("express-async-handler");
 
 // @desc Get All staff
@@ -28,7 +29,8 @@ const createNewStaff = asyncHandler(async (req, res) => {
   const staff = await Staff.create({  name, gender,role ,description, email, phone,  salary });
 
   if (staff) {
-    res.status(201).json({ message: `New staff created` });
+    await Salary.create({staffId: staff._id, salary: staff.salary});
+    res.status(201).json({ message: `New staff ${staff.name} created` });
   } else {
     res.status(400).json({ message: "Invalid staff data received" });
   }
@@ -79,9 +81,18 @@ const deleteStaff = asyncHandler(async (req, res) => {
   if (!staff) {
     return res.status(400).json({ message: "Staff not found" });
   }
+
+  // deleting the associated salary
+  const salary = await Salary.findOne({staffId: staff._id}).exec();
+
+  if (!salary) {
+    return res.status(400).json({message: "Salary not found"});
+  }
+
+  const delsalary = await salary.deleteOne(); 
   const result = await staff.deleteOne();
 
-  if (!result.acknowledged) {
+  if (!result.acknowledged || !delsalary.acknowledged) {
     return res.status(400).json({ message: "error occured, try again" });
   }
 

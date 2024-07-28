@@ -36,6 +36,7 @@ app.use("/fees", require("./routes/feeRoutes"));
 app.use("/transactions", require("./routes/transactionRoute"));
 app.use("/expenses", require("./routes/expenseRoutes"));
 app.use("/staffs", require("./routes/staffRoutes"));
+app.use("/salary", require("./routes/salaryRoutes"));
 
 app.all("*", (req, res) => {
   res.status(404);
