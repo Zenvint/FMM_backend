@@ -53,7 +53,70 @@ const updateSalary = asyncHandler(async (req, res) => {
   });
 });
 
+
+// @desc Update a fee
+// @route PATCH /fee
+// @access Private
+const updateHistory = asyncHandler(async (req, res) => {
+  const { id, datestring ,status } = req.body;
+  // Confirm data
+  if (
+    !id ||
+    !datestring ||
+    typeof status !== "boolean" 
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const salary = await Salary.findById(id).exec();
+
+  if (!salary) {
+    return res.status(400).json({ message: "salary not found" });
+  }
+
+  const record = { salary: salary.salary, status };
+  salary.history = { ...salary.history, [datestring]: record };
+
+  const updatedSalary = await salary.save();
+
+  res.json({ message: `salary with staffId: ${updatedSalary.staffId} updated` });
+});
+
+
+// @desc POST a fee
+// @route POST /startmonth
+// @access Private
+const startNewSalaryMonth = asyncHandler(async (req, res) => {
+  const { datestring } = req.body;
+  // Confirm data
+  if (!datestring) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const salaries = await Salary.find().exec();
+  if (!salaries?.length) {
+    return res.status(400).json({ message: "No salaries fee records found" });
+  }
+
+  for (const salary of salaries) {
+    const newhistory = {
+      salary: salary.salary,
+      status: salary.status,
+    };
+
+    //set the curent data to new values
+    salary.status = false;
+    salary.history = { ...salary.history, [datestring]: newhistory };
+
+    const updatefee = await salary.save();
+  }
+
+  res.json({ message: `process successful` });
+});
+
 module.exports = {
   getAllSalaries,
   updateSalary,
+  updateHistory,
+  startNewSalaryMonth
 };

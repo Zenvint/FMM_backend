@@ -25,7 +25,11 @@ const feeSchema = new mongoose.Schema(
     discount: {
         type: Number,
         default: 0
-    }
+    },
+    history: {
+      type: Object,
+      default: {},
+  },
   },
   {
     timestamps: true,

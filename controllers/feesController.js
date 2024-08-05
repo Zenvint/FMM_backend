@@ -73,7 +73,82 @@ const updateFee = asyncHandler(async (req, res) => {
   res.json({ message: `fee with studentId: ${updateFee.studentId} updated` });
 });
 
+// @desc Update a fee
+// @route PATCH /fee
+// @access Private
+const updateHistory = asyncHandler(async (req, res) => {
+  const { id, yearstring, discount, balance, amountPaid, status } = req.body;
+  // Confirm data
+  if (
+    !id ||
+    !yearstring ||
+    typeof amountPaid !== "number" ||
+    typeof balance !== "number" ||
+    typeof status !== "boolean" ||
+    typeof discount !== "number"
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const fee = await Fee.findById(id).exec();
+
+  if (!fee) {
+    return res.status(400).json({ message: "fee not found" });
+  }
+
+  const record = { amountPaid, balance, discount, status };
+  fee.history = { ...fee.history, [yearstring]: record };
+
+  const updatedFee = await fee.save();
+
+  res.json({ message: `fee with studentId: ${updateFee.studentId} updated` });
+});
+
+// @desc POST a fee
+// @route POST /startyear
+// @access Private
+const startNewFeeSet = asyncHandler(async (req, res) => {
+  const { yearstring } = req.body;
+  // Confirm data
+  if (!yearstring) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const fees = await Fee.find().exec();
+  if (!fees?.length) {
+    return res.status(400).json({ message: "No student fee records found" });
+  }
+
+  for (const fee of fees) {
+    const student = await Student.findById(fee.studentId).lean().exec();
+    const classobj = await Class.findById(student.classId).lean().exec();
+    const section = await Section.findById(student.sectionId).lean().exec();
+
+    const newhistory = {
+      amountPaid: fee.amountPaid,
+      balance: fee.balance,
+      discount: fee.discount,
+      status: fee.status,
+      sectionname: section.sectionname,
+      classname: classobj.classname
+    };
+
+    //set the curent data to new values
+    fee.amountPaid = 0;
+    fee.balance = classobj.tuition;
+    fee.discount = 0;
+    fee.status = false;
+    fee.history = { ...fee.history, [yearstring]: newhistory };
+
+    const updatefee = await fee.save();
+  }
+
+  res.json({ message: `process successful` });
+});
+
 module.exports = {
   getAllFees,
   updateFee,
+  updateHistory,
+  startNewFeeSet,
 };

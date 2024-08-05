@@ -63,6 +63,10 @@ const updateStaff = asyncHandler(async (req, res) => {
 
   const updatedStaff = await staff.save();
 
+  const staffsalary = await Salary.findOne({staffId: id}).exec();
+  staffsalary.salary = salary
+  await staffsalary.save();
+
   res.json({ message: `staff with Name: ${updateStaff.name} updated` });
 });
 

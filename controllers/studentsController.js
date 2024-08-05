@@ -1,8 +1,8 @@
 const Class = require("../models/Class");
+const Fee = require("../models/Fee");
 const moment = require('moment');
 const Section = require("../models/Section");
 const Student = require("../models/Student");
-const Fee = require("../models/Fee");
 const asyncHandler = require("express-async-handler");
 
 // @desc Get All students
@@ -99,9 +99,27 @@ const updateStudent = asyncHandler(async (req, res) => {
   student.parentname = parentname;
   student.parentnumber = parentnumber;
 
-  
-
   const updatedStudent = await student.save();
+
+  // ajusting the fee to match that of the new class
+
+  const fee = await Fee.findOne({studentId: id}).exec();
+  const classObj = await Class.findById(classId).exec();
+  const tuition = classObj.tuition;
+  const currentAmountPaid = fee.amountPaid;
+  const currentBalance = fee.balance;
+
+  const difference = tuition - (currentAmountPaid + currentBalance)
+  const newbalance = currentBalance + difference;
+
+  fee.balance = newbalance;
+  if (newbalance === 0){
+    fee.status = true;
+  }else {
+    fee.status = false;
+  }
+
+  await fee.save();
 
   res.json({ message: `${updatedStudent.matricule} updated` });
 });

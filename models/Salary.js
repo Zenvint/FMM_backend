@@ -11,9 +11,13 @@ const salarySchema = new mongoose.Schema(
       required: true,
     },
     status: {
-        type: Boolean,
-        default: false,
-    }
+      type: Boolean,
+      default: false,
+    },
+    history: {
+      type: Object,
+      default: {},
+    },
   },
   {
     timestamps: true,
