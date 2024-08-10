@@ -1,6 +1,6 @@
 const Transaction = require("../models/Transaction");
 const asyncHandler = require("express-async-handler");
-
+const moment = require('moment');
 // @desc Get All transactions
 // @route GET /transactions
 // @access Private
@@ -9,7 +9,17 @@ const getAllTransactions = asyncHandler(async (req, res) => {
   if (!transactions?.length) {
     return res.status(400).json({ message: "No transactions found" });
   }
-  res.json(transactions);
+
+  const transactionwithdependency = await Promise.all(
+    transactions.map(async (transaction) => {
+     
+      return {
+        ...transaction,
+        createdOn:moment(transaction.createdAt).format('YYYY-MM-DD')
+      };
+    })
+  );
+  res.json(transactionwithdependency);
 });
 
 // @desc Create new  transaction
