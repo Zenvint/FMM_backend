@@ -21,7 +21,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
     students.map(async (student) => {
       const section = await Section.findById(student.sectionId).lean().exec();
       const classObj = await Class.findById(student.classId).lean().exec();
-      return { ...student, sectionname: section.sectionname, classname: classObj.classname, dobformated: moment(student.dob).format('YYYY-MM-DD') };
+      return { ...student, sectionname: section.sectionname, classname: classObj.classname, dobformated: moment(student.dob).format('YYYY-MM-DD'), createdOn:moment(student.createdAt).format('YYYY-MM-DD')  };
     })
   );
 
@@ -60,6 +60,8 @@ const createNewStudent = asyncHandler(async (req, res) => {
     res.status(400).json({ message: "Invalid student data received" });
   }
 });
+
+
 
 // @desc Update a student
 // @route PATCH /student
@@ -124,6 +126,32 @@ const updateStudent = asyncHandler(async (req, res) => {
   res.json({ message: `${updatedStudent.matricule} updated` });
 });
 
+// @desc Update a student
+// @route PATCH /student
+// @access Private
+const dismissedStudent = asyncHandler(async (req, res) => {
+  const { id , dismissed, dismissalreason} = req.body;
+
+  // Confirm data
+  if (!id || typeof dismissed  !== "boolean" ||  typeof dismissalreason  !== "string") {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const student = await Student.findById(id).exec();
+
+  if (!student) {
+    return res.status(400).json({ message: "Student not found" });
+  }
+
+
+  student.dismissed = dismissed;
+  student.dismissalreason = dismissalreason;
+ 
+  const updatedStudent = await student.save();
+
+  res.json({ message: `${updatedStudent.matricule} updated` });
+});
+
 // @desc delete a student
 // @route DELETE /student
 // @access Private
@@ -163,4 +191,5 @@ module.exports = {
   createNewStudent,
   updateStudent,
   deleteStudent,
+  dismissedStudent
 };

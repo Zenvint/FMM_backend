@@ -1,6 +1,6 @@
 const Expense = require("../models/Expense");
 const asyncHandler = require("express-async-handler");
-
+const moment = require('moment');
 // @desc Get All expenses
 // @route GET /expenses
 // @access Private
@@ -10,7 +10,17 @@ const getAllExpenses = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "No expenses found" });
   }
 
-  res.json(expenses);
+  const expenseswithdependency = await Promise.all(
+    expenses.map(async (expense) => {
+     
+      return {
+        ...expense,
+        createdOn: moment(expense.createdAt).format('YYYY-MM-DD')
+      };
+    })
+  );
+
+  res.json(expenseswithdependency);
 });
 
 // @desc Create new expense

@@ -1,7 +1,7 @@
 const Staff = require("../models/Staff");
 const Salary = require("../models/Salary");
 const asyncHandler = require("express-async-handler");
-
+const moment = require('moment');
 // @desc Get All salaries
 // @route GET /salaries
 // @access Private
@@ -19,6 +19,7 @@ const getAllSalaries = asyncHandler(async (req, res) => {
         ...salary,
         name: staff.name,
         role: staff.role,
+        createdOn: moment(salary.createdAt).format('YYYY-MM-DD')
       };
     })
   );
