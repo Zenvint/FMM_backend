@@ -27,3 +27,5 @@
 20240721	23:01:24	bbd56a67-1b4a-4c62-9eab-a93fc7f0608b	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
 20240721	23:01:37	091e33a7-2d6b-41e6-b7d3-4c28aa1b5c4c	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
 20240721	23:02:03	b9cd71ad-5cff-4020-abba-01252e83c3b1	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
+20240911	15:29:18	49d8ba37-fa0e-4776-9a0d-68fcd0d43ed3	MongoServerError: collation not allowed in this atlas tier	POST	/users	undefined
+20240911	15:32:45	839f6087-edf1-481d-84ff-004760e4b6da	MongoServerError: collation not allowed in this atlas tier	POST	/users	undefined

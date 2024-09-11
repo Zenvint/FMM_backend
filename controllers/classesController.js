@@ -37,8 +37,7 @@ const createNewClass = asyncHandler(async (req, res) => {
   }
 
   // check for duplicates
-  const duplicate = await Class.findOne({ classname })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Class.findOne({ classname: new RegExp('^' + classname.toLowerCase(), 'i') })
     .lean()
     .exec();
 
@@ -74,8 +73,7 @@ const updateClass = asyncHandler(async (req, res) => {
   }
 
   // check for duplicate
-  const duplicate = await Class.findOne({ classname })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Class.findOne({ classname: new RegExp('^' + classname.toLowerCase(), 'i') })
     .lean()
     .exec();
 

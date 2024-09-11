@@ -29,8 +29,7 @@ const createNewSection = asyncHandler(async (req, res) => {
   }
 
   // check for duplicates
-  const duplicate = await Section.findOne({ sectionname })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Section.findOne({ sectionname: new RegExp('^' + sectionname.toLowerCase(), 'i') })
     .lean()
     .exec();
 
@@ -72,8 +71,7 @@ const updateSection = asyncHandler(async (req, res) => {
   }
 
   // check for duplicate
-  const duplicate = await Section.findOne({ sectionname })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Section.findOne({ sectionname: new RegExp('^' + sectionname.toLowerCase(), 'i') })
     .lean()
     .exec();
 
