@@ -40,8 +40,7 @@ const createNewStudent = asyncHandler(async (req, res) => {
   }
 
   // check for duplicates
-  const duplicate = await Student.findOne({ matricule })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Student.findOne({ matricule: new RegExp('^' + matricule.toLowerCase(), 'i') })
     .lean()
     .exec();
 
@@ -81,8 +80,7 @@ const updateStudent = asyncHandler(async (req, res) => {
   }
 
   // check for duplicate
-  const duplicate = await Student.findOne({ matricule })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Student.findOne({ matricule: new RegExp('^' + matricule.toLowerCase(), 'i') })
     .lean()
     .exec();
 

@@ -40,8 +40,7 @@ const createNewCourse = asyncHandler(async (req, res) => {
   }
 
   // check for duplicates
-  const duplicate = await Course.findOne({ title })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Course.findOne({ title: new RegExp('^' + title.toLowerCase(), 'i') })
     .lean()
     .exec();
 
@@ -77,8 +76,7 @@ const updateCourse = asyncHandler(async (req, res) => {
   }
 
   // check for duplicate
-  const duplicate = await Course.findOne({ title })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await Course.findOne({ title: new RegExp('^' + title.toLowerCase(), 'i') })
     .lean()
     .exec();
 

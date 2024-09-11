@@ -32,8 +32,7 @@ const createNewUser = asyncHandler(async (req, res) => {
   }
 
   // check for duplicates
-  const duplicate = await User.findOne({ email })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await User.findOne({ email: new RegExp('^' + email.toLowerCase(), 'i') })
     .lean()
     .exec();
 
@@ -83,8 +82,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   // check for duplicate
-  const duplicate = await User.findOne({ email })
-    .collation({ locale: "en", strength: 2 })
+  const duplicate = await User.findOne({ email: new RegExp('^' + email.toLowerCase(), 'i') })
     .lean()
     .exec();
   // Allow updates to original user
