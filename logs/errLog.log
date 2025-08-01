@@ -29,3 +29,4 @@
 20240721	23:02:03	b9cd71ad-5cff-4020-abba-01252e83c3b1	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
 20240911	15:29:18	49d8ba37-fa0e-4776-9a0d-68fcd0d43ed3	MongoServerError: collation not allowed in this atlas tier	POST	/users	undefined
 20240911	15:32:45	839f6087-edf1-481d-84ff-004760e4b6da	MongoServerError: collation not allowed in this atlas tier	POST	/users	undefined
+20250801 06:31:54	9ec41e9a-a935-42c5-acec-372d89e2a0fa	Error: read ECONNRESET	GET	/fees	http://localhost:3000
