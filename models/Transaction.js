@@ -9,7 +9,11 @@ const transactionSchema = new mongoose.Schema(
     amount: {
         type: Number,
         required: true,
-    }
+    },
+    history: {
+      type: Object,
+      default: {},
+    },
   },
   {
     timestamps: true,

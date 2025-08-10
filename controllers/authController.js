@@ -16,12 +16,12 @@ const login = asyncHandler(async (req, res) => {
     const foundUser = await User.findOne({ email }).exec()
 
     if (!foundUser || !foundUser.active) {
-        return res.status(401).json({ message: 'Unauthorized' })
+        return res.status(401).json({ message: 'User not found' })
     }
 
     const match = await bcrypt.compare(password, foundUser.password)
 
-    if (!match) return res.status(401).json({ message: 'Unauthorized' })
+    if (!match) return res.status(401).json({ message: 'Not authorized' })
 
     const accessToken = jwt.sign(
         {

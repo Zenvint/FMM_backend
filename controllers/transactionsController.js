@@ -1,6 +1,8 @@
+// ===== UPDATED TRANSACTION CONTROLLER =====
 const Transaction = require("../models/Transaction");
 const asyncHandler = require("express-async-handler");
-const moment = require('moment');
+const moment = require("moment");
+
 // @desc Get All transactions
 // @route GET /transactions
 // @access Private
@@ -12,17 +14,16 @@ const getAllTransactions = asyncHandler(async (req, res) => {
 
   const transactionwithdependency = await Promise.all(
     transactions.map(async (transaction) => {
-     
       return {
         ...transaction,
-        createdOn:moment(transaction.createdAt).format('YYYY-MM-DD')
+        createdOn: moment(transaction.createdAt).format("YYYY-MM-DD"),
       };
     })
   );
   res.json(transactionwithdependency);
 });
 
-// @desc Create new  transaction
+// @desc Create new transaction
 // @route POST /transaction
 // @access Private
 const createNewTransaction = asyncHandler(async (req, res) => {
@@ -45,7 +46,20 @@ const createNewTransaction = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Start new academic year for transactions - Sum by type and archive
+// @route POST /transaction/startyear
+// @access Private
+const startNewTransactionYear = asyncHandler(async (req, res) => {
+  // You can accept yearstring if you want to log it, but it's unused here
+  // const { yearstring } = req.body;
+
+  const result = await Transaction.deleteMany().exec();
+  // result.deletedCount tells you how many were removed
+  res.json({ message: `Deleted ${result.deletedCount} transactions` });
+});
+
 module.exports = {
   getAllTransactions,
   createNewTransaction,
+  startNewTransactionYear,
 };

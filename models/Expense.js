@@ -14,6 +14,10 @@ const expenseSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    history: {
+      type: Object,
+      default: {},
+    },
   },
   {
     timestamps: true,

@@ -29,4 +29,20 @@
 20240721	23:02:03	b9cd71ad-5cff-4020-abba-01252e83c3b1	ReferenceError: Class is not defined	GET	/fees	http://localhost:3000
 20240911	15:29:18	49d8ba37-fa0e-4776-9a0d-68fcd0d43ed3	MongoServerError: collation not allowed in this atlas tier	POST	/users	undefined
 20240911	15:32:45	839f6087-edf1-481d-84ff-004760e4b6da	MongoServerError: collation not allowed in this atlas tier	POST	/users	undefined
-20250801 06:31:54	9ec41e9a-a935-42c5-acec-372d89e2a0fa	Error: read ECONNRESET	GET	/fees	http://localhost:3000
+20241122	15:47:45	858c6871-731f-4eaf-9cc5-5a9d1c10fb26	Too Many Requests: Too many login attempts from this IP, please try again after a 60 second pause	POST	/	undefined
+20241123	01:13:06	61418927-3525-4616-b3cc-5a1598a29228	MongoServerSelectionError: connection timed out	POST	/auth	undefined
+20250806	15:05:25	d0b4ae17-192e-441a-96f6-1a84bab9d7eb	ValidationError: Transaction validation failed: transactiontype: Path `transactiontype` is required.	POST	/transactions/startyear	http://localhost:3000
+20250806	15:05:25	56837b9c-596a-41e9-adf9-de634f92d079	ValidationError: Expense validation failed: benefactor: Path `benefactor` is required., descriptions: Path `descriptions` is required.	POST	/expenses/startyear	http://localhost:3000
+20250806	15:06:22	5df2aa4c-e238-4a42-85b0-c60b84ba2378	ValidationError: Transaction validation failed: transactiontype: Path `transactiontype` is required.	POST	/transactions/startyear	http://localhost:3000
+20250806	15:06:22	048a124f-ce19-4eec-969d-9c4eba735ba0	ValidationError: Expense validation failed: benefactor: Path `benefactor` is required., descriptions: Path `descriptions` is required.	POST	/expenses/startyear	http://localhost:3000
+20250806	15:07:50	1e2498b7-ad14-4123-9a33-debfb3c34af6	Error: read ECONNRESET	GET	/classes	http://localhost:3000
+20250806	15:09:45	7ae1dfa2-2663-4415-a303-3aa72bdba088	ValidationError: Transaction validation failed: transactiontype: Path `transactiontype` is required.	POST	/transactions/startyear	http://localhost:3000
+20250806	15:09:45	b17bfd0e-bf2e-45f5-ab9a-8b18a0041719	ValidationError: Expense validation failed: benefactor: Path `benefactor` is required., descriptions: Path `descriptions` is required.	POST	/expenses/startyear	http://localhost:3000
+20250806	18:31:42	3c43816b-c16a-414d-95e1-5b6d663e3165	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	GET	/classes	http://localhost:3000
+20250806	18:31:42	6ca8e2cc-692f-4401-884b-7f2fbeb659d2	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	GET	/fees	http://localhost:3000
+20250807	06:34:15	eeda8814-2f08-4d3d-abdc-694ffe61a243	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	GET	/installments	http://localhost:3000
+20250807	06:34:17	700820a1-fc97-4ec2-a661-767d847a0e3a	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	PATCH	/salary	http://localhost:3000
+20250807	06:34:47	7cdc3c9e-5b16-4f27-b14c-9bb9cb839018	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	POST	/transactions	http://localhost:3000
+20250807	06:34:47	9aa3cbc0-ef65-4d35-930e-a56e369ebee6	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	GET	/salary	http://localhost:3000
+20250807	06:35:07	4b9fd7cc-74b6-4604-8b61-bb56f37c2073	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	GET	/salary	http://localhost:3000
+20250807	06:35:08	b377a954-3990-4368-9b1d-45558839cf38	MongoServerSelectionError: connect ETIMEDOUT 65.63.116.198:27017	PATCH	/salary	http://localhost:3000

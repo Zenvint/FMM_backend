@@ -13,6 +13,8 @@ const PORT = process.env.PORT || 3500;
 
 connectDB();
 
+// app.set("trust proxy", 1);
+
 app.use(logger);
 
 app.use(cors(corsOptions));
@@ -52,9 +54,18 @@ app.all("*", (req, res) => {
 app.use(errorHandler);
 
 mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
+  console.log("Connected to MongoDB", mongoose.connection.name);
+  
+  async function listCollections() {
+    const cols = await mongoose.connection.db.listCollections().toArray();
+    console.log(cols);
+  }
+
+  listCollections();
+
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
+
 
 mongoose.connection.on("error", (err) => {
   console.log(err);

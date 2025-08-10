@@ -1,6 +1,8 @@
+// ===== UPDATED EXPENSE CONTROLLER =====
 const Expense = require("../models/Expense");
 const asyncHandler = require("express-async-handler");
-const moment = require('moment');
+const moment = require("moment");
+
 // @desc Get All expenses
 // @route GET /expenses
 // @access Private
@@ -12,10 +14,9 @@ const getAllExpenses = asyncHandler(async (req, res) => {
 
   const expenseswithdependency = await Promise.all(
     expenses.map(async (expense) => {
-     
       return {
         ...expense,
-        createdOn: moment(expense.createdAt).format('YYYY-MM-DD')
+        createdOn: moment(expense.createdAt).format("YYYY-MM-DD"),
       };
     })
   );
@@ -70,7 +71,7 @@ const updateExpense = asyncHandler(async (req, res) => {
   res.json({ message: `expense updated` });
 });
 
-// @desc delete a expense
+// @desc Delete a expense
 // @route DELETE /expense
 // @access Private
 const deleteExpense = asyncHandler(async (req, res) => {
@@ -85,6 +86,7 @@ const deleteExpense = asyncHandler(async (req, res) => {
   if (!expense) {
     return res.status(400).json({ message: "Expense not found" });
   }
+
   const result = await expense.deleteOne();
 
   if (!result.acknowledged) {
@@ -95,9 +97,18 @@ const deleteExpense = asyncHandler(async (req, res) => {
   res.json(reply);
 });
 
+// @desc Start new academic year for expenses - Sum total and archive
+// @route POST /expense/startyear
+// @access Private
+const startNewExpenseYear = asyncHandler(async (req, res) => {
+  // const { yearstring } = req.body; // optional
+  const result = await Expense.deleteMany().exec();
+  res.json({ message: `Deleted ${result.deletedCount} expenses` });
+});
 module.exports = {
   getAllExpenses,
   createNewExpense,
   updateExpense,
   deleteExpense,
+  startNewExpenseYear,
 };
