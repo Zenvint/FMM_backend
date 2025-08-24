@@ -18,20 +18,28 @@ const getAllFees = asyncHandler(async (req, res) => {
   // Add dependent data to each fee before sending the response
   const feewithdependent = await Promise.all(
     fees.map(async (fee) => {
-      const student = await Student.findById(fee.studentId).lean().exec();
-      const section = await Section.findById(student.sectionId).lean().exec();
-      const installment = await Installment.findOne({ sectionId: section._id })
-        .lean()
-        .exec();
-      const classobj = await Class.findById(student.classId).lean().exec();
+      // Defensive lookups: a related document might be missing
+      const student = fee.studentId
+        ? await Student.findById(fee.studentId).lean().exec()
+        : null;
+      const section = student?.sectionId
+        ? await Section.findById(student.sectionId).lean().exec()
+        : null;
+      const installment = section?._id
+        ? await Installment.findOne({ sectionId: section._id }).lean().exec()
+        : null;
+      const classobj = student?.classId
+        ? await Class.findById(student.classId).lean().exec()
+        : null;
+
       return {
         ...fee,
-        matricule: student.matricule,
-        studentname: student.fullname,
-        sectionname: section.sectionname,
-        classname: classobj.classname,
-        installmentId: installment._id,
-        tuition: classobj.tuition,
+        matricule: student?.matricule ?? null,
+        studentname: student?.fullname ?? null,
+        sectionname: section?.sectionname ?? null,
+        classname: classobj?.classname ?? null,
+        installmentId: installment?._id ?? null,
+        tuition: classobj?.tuition ?? null,
       };
     })
   );
@@ -71,11 +79,14 @@ const updateFee = asyncHandler(async (req, res) => {
 
   const updatedFee = await fee.save();
 
-  res.json({ message: `fee with studentId: ${updateFee.studentId} updated` });
+  res.json({
+    message: `fee with studentId: ${updatedFee.studentId} updated`,
+    updatedFee,
+  });
 });
 
-// @desc Update a fee
-// @route PATCH /fee
+// @desc Update a fee's history for a year
+// @route PATCH /fee/history
 // @access Private
 const updateHistory = asyncHandler(async (req, res) => {
   const { id, yearstring, discount, balance, amountPaid, status } = req.body;
@@ -102,10 +113,13 @@ const updateHistory = asyncHandler(async (req, res) => {
 
   const updatedFee = await fee.save();
 
-  res.json({ message: `fee with studentId: ${updateFee.studentId} updated` });
+  res.json({
+    message: `fee history for studentId: ${updatedFee.studentId} updated`,
+    updatedFee,
+  });
 });
 
-// @desc POST a fee
+// @desc POST a fee - start a new academic year for all fees
 // @route POST /startyear
 // @access Private
 const startNewFeeSet = asyncHandler(async (req, res) => {
@@ -121,27 +135,39 @@ const startNewFeeSet = asyncHandler(async (req, res) => {
   }
 
   for (const fee of fees) {
-    const student = await Student.findById(fee.studentId).lean().exec();
-    const classobj = await Class.findById(student.classId).lean().exec();
-    const section = await Section.findById(student.sectionId).lean().exec();
+    const student = fee.studentId
+      ? await Student.findById(fee.studentId).lean().exec()
+      : null;
+    const classobj = student?.classId
+      ? await Class.findById(student.classId).lean().exec()
+      : null;
+    const section = student?.sectionId
+      ? await Section.findById(student.sectionId).lean().exec()
+      : null;
 
+    // Capture the current values and related info into the year's history
     const newhistory = {
       amountPaid: fee.amountPaid,
       balance: fee.balance,
       discount: fee.discount,
       status: fee.status,
-      sectionname: section.sectionname,
-      classname: classobj.classname
+      registrationfee: fee.registrationfee,
+      sectionname: section?.sectionname ?? null,
+      classname: classobj?.classname ?? null,
+      tuition: classobj?.tuition ?? null,
     };
 
-    //set the curent data to new values
+    // Reset the current fee data for the new academic year
     fee.amountPaid = 0;
-    fee.balance = classobj.tuition;
+    fee.balance = classobj?.tuition ?? fee.balance; // fall back to existing balance if class not found
     fee.discount = 0;
     fee.status = false;
+    fee.registrationfee = false; // <-- newly added: reset registration status to false for new year
+
+    // Add to history
     fee.history = { ...fee.history, [yearstring]: newhistory };
 
-    const updatefee = await fee.save();
+    await fee.save();
   }
 
   res.json({ message: `process successful` });
